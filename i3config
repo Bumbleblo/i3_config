@@ -11,7 +11,10 @@
 
 set $mod Mod1
 
-# set upt battery alert script
+# bind for telegram-desktop
+bindsym $mod+t exec telegram-desktop
+
+# set up battery alert script
 exec /home/felipe/.config/i3/battery_event.py
 
 # set up slideshow background
