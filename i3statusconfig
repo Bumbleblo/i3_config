@@ -5,8 +5,7 @@ general {
 }
 
 order += "cpu_usage"
-order += "ipv6"
-order += "path_exists VPN"
+order += "volume master"
 order += "wireless wlp1s0"
 order += "ethernet eth0"
 order += "battery 0"
@@ -16,6 +15,12 @@ order += "tztime local"
 wireless wlp1s0 {
         format_up = "(%quality:%essid, %bitrate) %ip"
         format_down = "Wireless:off"
+}
+
+volume master{
+		format = "Volume: %volume"
+		format_muted= "MUTED"
+		mixer = "Master"
 }
 
 # REVIEW
@@ -35,16 +40,9 @@ battery 0 {
         status_unk = "UNK"
         status_full = "FULL"
         path = "/sys/class/power_supply/BAT1/uevent"
-        low_threshold = 10
+        low_threshold = 15
 		last_full_capacity=true
 		hide_seconds=true
-}
-
-# REVIEW
-# show VPN status
-path_exists VPN {
-        # path exists when a VPN tunnel launched by nmcli/nm-applet is active
-        path = "/proc/sys/net/ipv4/conf/tun0"
 }
 
 # display time and date in formate hh:mm:ss dd-mm-yy 
@@ -54,7 +52,7 @@ tztime local {
 
 # display usage of all cpus
 cpu_usage {
-	format="CPU_0: %cpu0 CPU_1: %cpu1 CPU_2: %cpu2"
+	format="CPU_0: %cpu0 CPU_1: %cpu1 CPU_2: %cpu2 CPU_3: %cpu3"
 	max_threshold=90
 }
 
