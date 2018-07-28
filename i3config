@@ -11,6 +11,13 @@
 
 set $mod Mod1
 
+# set upt battery alert script
+exec /home/felipe/.config/i3/battery_event.py
+
+# set up slideshow background
+
+exec /home/felipe/.config/i3/slide_show.sh
+
 # set volume adjust
 
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%
@@ -23,6 +30,7 @@ font pango:monospace 8
 
 # Set click touchpad 
 exec xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Tapping Enabled" 1
+
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
