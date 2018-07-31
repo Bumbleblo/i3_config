@@ -10,21 +10,20 @@ import subprocess
 import logging
 
 # minutes in sleep
-SLEEP_TIME = 5
+SLEEP_TIME = 30
 LOWER_LEVEL = 15
 
 if __name__ == '__main__':
 	
 	logging.debug('Battery script up')
 
-	battery = psutil.sensors_battery()
-	
 	while(1):
 
+		battery = psutil.sensors_battery()
 		if battery.percent <= LOWER_LEVEL:
 			subprocess.Popen(['notify-send', '-u', 'critical', 'Low Battery', 'Charge you laptop'])
 
-		time.sleep(SLEEP_TIME*1000)
+		time.sleep(SLEEP_TIME)
 	
 	logging.debug('Battery script down')
 	

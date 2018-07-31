@@ -15,7 +15,7 @@ set $mod Mod1
 bindsym $mod+t exec telegram-desktop
 
 # set up battery alert script
-exec /home/felipe/.config/i3/battery_event.py
+#exec /home/felipe/.config/i3/battery_event.py
 
 # set up slideshow background
 
@@ -26,6 +26,11 @@ exec /home/felipe/.config/i3/slide_show.sh
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+
+# set brightness adjust
+
+bindsym $mod+z exec xbacklight -dec 10
+bindsym $mod+x exec xbacklight -inc 10
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
