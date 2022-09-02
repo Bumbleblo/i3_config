@@ -13,3 +13,7 @@ require('options')
 
 -- lsp config
 require('lsp-config')
+
+-- mappings
+require('mappings')
+

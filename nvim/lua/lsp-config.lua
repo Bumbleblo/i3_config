@@ -1,11 +1,11 @@
-local opts = { noremap=true, silent=true } 
+local opts = { noremap=true, silent=false } 
+
+vim.lsp.set_log_level("debug")
 
 local on_attach = function(client, buffer)
 
-    vim.api.nvim_buf_set_option(buffer, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
     -- TODO Maybe use a shallow copy and or a hierachical table
-    local bufferOpts = { noremap=true, silent=true, buffer=buffer } 
+    local bufferOpts = { noremap=true, silent=false, buffer=buffer } 
 
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufferOpts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufferOpts)
