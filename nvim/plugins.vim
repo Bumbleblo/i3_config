@@ -1,6 +1,5 @@
 call plug#begin('~/.config/nvim/plugins')
 
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'preservim/nerdtree'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'

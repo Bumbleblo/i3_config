@@ -21,11 +21,24 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 local lspconfig = require('lspconfig')
 
 local default_config_servers = {
-    'csharp_ls',
     'graphql',
     'tsserver',
     'bashls'
 } 
+
+lspconfig['omnisharp'].setup{
+    on_attach = on_attach,
+    capabilities = capabilities,
+    cmd = { "dotnet", "/home/felipe/Downloads/omnishap/OmniSharp.dll" },
+    enable_editorconfig_support = true,
+    enable_ms_build_load_projects_on_demand = true,
+    enable_roslyn_analyzers = false, 
+    organize_imports_on_format = true,
+    enable_import_completion = true,
+    sdk_include_prereleases = true, 
+    analyze_open_documents_only = true, 
+    enable_package_restore = true
+}
 
 -- TODO ipairs don't seems right
 for _, lsp_server in ipairs(default_config_servers) do 
@@ -42,7 +55,7 @@ local luasnip = require('luasnip')
 cmp.setup{
     snippet = {
         expand = function(args)
-            luasnip.lsp_expand(args.body)    
+            luasnip.lsp_expand(args)    
         end
     },
     window = {
