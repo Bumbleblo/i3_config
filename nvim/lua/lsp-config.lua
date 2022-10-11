@@ -1,6 +1,9 @@
 local opts = { noremap=true, silent=false } 
 
-vim.lsp.set_log_level("debug")
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
 local on_attach = function(client, buffer)
 
@@ -10,6 +13,7 @@ local on_attach = function(client, buffer)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufferOpts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufferOpts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufferOpts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufferOpts)
     
 end 
 
@@ -20,10 +24,31 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 -- lsp configuration
 local lspconfig = require('lspconfig')
 
+local configs = require('lspconfig.configs')
+
+if not configs.custom then
+ configs.custom = {
+   default_config = {
+     cmd = {'python3', '/home/felipe/test.py'},
+     filetypes = {'python'},
+     root_dir = function(fname)
+        return "~/ "
+       -- return configs.util.find_git_ancestor(fname)
+     end,
+     settings = {},
+   },
+ }
+end
+
+
+
 local default_config_servers = {
     'graphql',
     'tsserver',
-    'bashls'
+    'bashls',
+    'sumneko_lua',
+    'custom',
+    'rust_analyzer',
 } 
 
 lspconfig['omnisharp'].setup{
