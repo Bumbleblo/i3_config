@@ -17,6 +17,9 @@ require('lsp-config')
 -- mappings
 require('mappings')
 
+require('nvim_dap')
+
+
 local configs = require('lspconfig.configs')
 
 local jsgroup = vim.api.nvim_create_augroup('JSgroup', { clear = true })
@@ -34,5 +37,3 @@ vim.api.nvim_create_autocmd(
         end,
     }
 )
-
-configs.custom.setup{}

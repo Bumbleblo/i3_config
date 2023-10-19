@@ -1,10 +1,13 @@
 call plug#begin('~/.config/nvim/plugins')
 
 Plug 'preservim/nerdtree'
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
+"Plug 'junegunn/fzf'
+"Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
 Plug 'neovim/nvim-lspconfig'
 Plug 'gruvbox-community/gruvbox'
+Plug 'mfussenegger/nvim-dap'
 "Plug 'vim-airline/vim-airline'
 "Plug 'editorconfig/editorconfig-vim'
 

@@ -19,36 +19,22 @@ end
 
 -- improved capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- lsp configuration
 local lspconfig = require('lspconfig')
 
 local configs = require('lspconfig.configs')
 
-if not configs.custom then
- configs.custom = {
-   default_config = {
-     cmd = {'python3', '/home/felipe/test.py'},
-     filetypes = {'python'},
-     root_dir = function(fname)
-        return "~/ "
-       -- return configs.util.find_git_ancestor(fname)
-     end,
-     settings = {},
-   },
- }
-end
-
-
 
 local default_config_servers = {
     'graphql',
     'tsserver',
     'bashls',
-    'sumneko_lua',
-    'custom',
+    'lua_ls',
+    'clangd',
     'rust_analyzer',
+    'pylsp',
 } 
 
 lspconfig['omnisharp'].setup{
@@ -80,7 +66,7 @@ local luasnip = require('luasnip')
 cmp.setup{
     snippet = {
         expand = function(args)
-            luasnip.lsp_expand(args)    
+            luasnip.lsp_expand(args)
         end
     },
     window = {
@@ -92,10 +78,25 @@ cmp.setup{
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
       ['<C-Space>'] = cmp.mapping.complete(),
       ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),    
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
     }),
     sources = {
         { name = 'nvim_lsp' },
         { name = 'luasnip' }
     }
 }
+
+vim.lsp.start({
+    name = "myCustomlsp",
+    cmd = { "ls" },
+    root_dir = ".",
+    cmd_env = { POST = 4000; HOST = "0.0.0.0" }
+})
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(ev)
+    vim.bo[ev.buf].formatexpr = nil
+    vim.bo[ev.buf].omnifunc = nil
+    vim.keymap.del("n", "K", { buffer = ev.buf })
+  end,
+})
