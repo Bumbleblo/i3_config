@@ -13,3 +13,6 @@ vim.keymap.set('n', '<C-g>', builtin.live_grep, options)
 
 -- NERDTree
 map('n', '<C-p>', ':NERDTreeToggle<cr>', options)
+
+-- tags
+map('n', 'gD', ':TagbarToggle', options)

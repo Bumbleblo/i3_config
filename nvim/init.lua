@@ -2,7 +2,7 @@
 
 
 -- load plugins
-vim.cmd('source ~/.config/nvim/plugins.vim')
+require("plugins")
 
 -- load style
 require('style')
@@ -16,9 +16,6 @@ require('lsp-config')
 
 -- mappings
 require('mappings')
-
-require('nvim_dap')
-
 
 local configs = require('lspconfig.configs')
 
