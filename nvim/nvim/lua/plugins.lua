@@ -43,9 +43,24 @@ require("lazy").setup({
 		'tpope/vim-fugitive',
 		event = 'VimEnter',
 	},
+    {  -- Autocomplete
+        'hrsh7th/nvim-cmp', 
+        event = 'VimEnter',
+        dependencies = {
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-path',
+            {
+                "L3MON4D3/LuaSnip",
+                -- follow latest release.
+                version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+                -- install jsregexp (optional!).
+                build = "make install_jsregexp"
+            }
+        }
+    },
 	{
 		'neovim/nvim-lspconfig',
-		event = 'VimEnter',
+		event = 'VimEnter'
 	}
 }, 
 opts)

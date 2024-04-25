@@ -5,8 +5,37 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
 
--- improved capabilities
-local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- autocomplete
+local cmp = require('cmp')
+local luasnip = require('luasnip')
+
+cmp.setup({
+    snippet = {
+        expand = function(args)
+            luasnip.lsp_expand(args.body)
+        end
+    },
+    window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered()
+    },
+    mapping = cmp.mapping.preset.insert({
+        ['<C-n>'] = cmp.mapping.select_next_item(),
+        ['<C-p>'] = cmp.mapping.select_prev_item(),
+        ['<C-y>'] = cmp.mapping.confirm { select = true },
+        ['<C-Space>'] = cmp.mapping.complete {}
+    }),
+    sources = {
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' }
+    }
+
+})
+
+local nvimCapabilities = vim.lsp.protocol.make_client_capabilities()
+local cmpCapabilities = require('cmp_nvim_lsp').default_capabilities()
+
+local capabilities = vim.tbl_deep_extend('force', nvimCapabilities, require('cmp_nvim_lsp').default_capabilities())
 
 -- lsp configuration
 local lspconfig = require('lspconfig')
@@ -15,6 +44,7 @@ local default_config_servers = {
     'tsserver',
     'bashls',
     'lua_ls',
+    'jsonls',
     'ccls',
     'rust_analyzer',
     'pylsp',
@@ -22,13 +52,7 @@ local default_config_servers = {
 
 lspconfig['omnisharp'].setup{
     capabilities = capabilities,
-    cmd = { "dotnet", "/home/felipe/Downloads/omnishap/OmniSharp.dll" },
-    enable_editorconfig_support = true,
-    enable_ms_build_load_projects_on_demand = true,
-    enable_roslyn_analyzers = false,
-    organize_imports_on_format = true,
-    analyze_open_documents_only = false,
-    enable_package_restore = true
+    cmd = { "dotnet",  "/home/borges/libs/omnisharp/OmniSharp.dll" }
 }
 
 -- TODO ipairs don't seems right
@@ -37,6 +61,7 @@ for _, lsp_server in ipairs(default_config_servers) do
         capabilities = capabilities
     }
 end
+
 
 -- based on https://github.com/nvim-lua/kickstart.nvim
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -52,6 +77,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     map('gd', telescope.lsp_definitions, '[G]oto [D]efinitions')
     map('gi', telescope.lsp_implementations, '[G]oto [I]mplementation')
     map('gr', telescope.lsp_references, '[G]oto [R]eferences')
+    map('gT', telescope.lsp_type_definitions, '[G]oto [T]ype')
 
   end,
 })
